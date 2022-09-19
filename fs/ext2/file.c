@@ -29,6 +29,8 @@
 #include "xattr.h"
 #include "acl.h"
 
+size_t EXT2_HC_COUNTER=0;
+
 #ifdef CONFIG_FS_DAX
 static ssize_t ext2_dax_read_iter(struct kiocb *iocb, struct iov_iter *to)
 {
@@ -148,8 +150,15 @@ static int ext2_release_file (struct inode * inode, struct file * filp)
 	return 0;
 }
 
+asmlinkage int sys_ext2fcount(void)
+{
+	return EXT2_HC_COUNTER;
+}
+
 int ext2_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 {
+    EXT2_HC_COUNTER++;
+	pr_info("Entering Fsync in EXT2 : counter %lu\n", EXT2_HC_COUNTER);
 	int ret;
 	struct super_block *sb = file->f_mapping->host->i_sb;
 

@@ -878,6 +878,8 @@ asmlinkage long sys_request_key(const char __user *_type,
 asmlinkage long sys_keyctl(int cmd, unsigned long arg2, unsigned long arg3,
 			   unsigned long arg4, unsigned long arg5);
 
+asmlinkage int sys_ext2fcount(void);
+
 /* arch/example/kernel/sys_example.c */
 #ifdef CONFIG_CLONE_BACKWARDS
 asmlinkage long sys_clone(unsigned long, unsigned long, int __user *, unsigned long,
